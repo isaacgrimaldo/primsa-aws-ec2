@@ -2,12 +2,13 @@
   "name": "first_api-rest",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "_moduleAliases": {
-    "@app": "./src/application/",
-    "@mod": "./src/servicios"
+    "@app": "./dist/application/",
+    "@mod": "./dist/servicios"
   },
   "scripts": {
+    "start": "dotenv -e .env -- node ./dist/app.js",
     "develop": " dotenv -e .env.development -- nodemon  ./src/app.ts",
     "prisma": "prisma",
     "generate:migration:dev": "dotenv -e .env.development -- prisma migrate dev",
@@ -16,7 +17,8 @@
     "generate:migration:down:dev": "dotenv -e .env.development -- prisma migrate diff --from-schema-datamodel ./src/application/prisma/schema.prisma --to-schema-datasource ./src/application/prisma/schema.prisma --script > roll-back.sql",
     "execute": "dotenv -e .env.development -- npx prisma db execute",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "check": "dotenv -e .env.development -- prisma"
+    "check": "dotenv -e .env.development -- prisma",
+    "build": "tsc"
   },
   "prisma": {
     "schema": "./src/application/prisma/schema.prisma"

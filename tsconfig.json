@@ -110,7 +110,8 @@
   "include": [
     "src",
     "src/**/*",
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/application/**/*",
   ],
   "exclude": [
     "node_modules",
