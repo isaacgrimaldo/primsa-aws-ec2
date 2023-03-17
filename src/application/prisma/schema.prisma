@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["public"]
+}
+
+model Post {
+  id       Int     @id @default(autoincrement())
+  title    String  @db.VarChar(255)
+  content  String? @db.Text
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId Int
+
+  @@schema("public")
+}
+
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int     @unique
+
+  @@index([userId])
+  @@schema("public")
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  name    String?  @db.VarChar(100)
+  posts   Post[]
+  profile Profile?
+
+  @@schema("public")
+}
